@@ -1,0 +1,27 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'java-library'
+    id 'maven-publish'
+}
+
+version docparser_version
+
+dependencies {
+    implementation project(':poiutil')
+//    implementation project(':pdfitext')
+    implementation project(':pdfbox')
+
+    implementation group: 'commons-io', name: 'commons-io', version: commons_io_version
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: sfl4j_version
+}
+
+sourceCompatibility = "11"
+targetCompatibility = "11"
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = docparser_artifact // Specify module-specific artifactId
+        }
+    }
+}
