@@ -1,0 +1,43 @@
+/*
+IMPORT PROXY INFO
+On the first Build, Gradle will need to fetch dependencies.  Open a terminal window instead (right click on project, show in -> terminal)
+Run the following line
+gradlew -Dhttp.proxyHost=proxy.ext.ray.com -Dhttp.proxyPort=80 -Dhttps.proxyHost=proxy.ext.ray.com -Dhttps.proxyPort=80 build
+
+The following line will make sure Eclipse gets all the java doc
+gradlew -Dhttp.proxyHost=proxy.ext.ray.com -Dhttp.proxyPort=80 -Dhttps.proxyHost=proxy.ext.ray.com -Dhttps.proxyPort=80 build cleanEclipse eclipse
+
+https://stackoverflow.com/questions/30108349/how-do-i-attach-javadocs-for-a-gradle-dependency-in-eclipse
+*/
+
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'java-library'
+	id 'maven-publish'
+}
+
+
+version poiutil_version
+
+dependencies {
+
+	implementation group: 'commons-io', name: 'commons-io', version: commons_io_version
+
+	implementation group: 'org.apache.poi', name: 'poi', version: poi_version
+	implementation group: 'org.apache.poi', name: 'poi-ooxml', version: poi_ooxml_version
+	implementation group: 'org.apache.poi', name: 'poi-scratchpad', version: poi_scratchpad_version
+
+	implementation group: 'org.apache.xmlbeans', name: 'xmlbeans', version: xmlbeans_version
+
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: sfl4j_version
+
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			artifactId = poiutil_artifact // Specify module-specific artifactId
+		}
+	}
+}
+
