@@ -1,0 +1,31 @@
+plugins {
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'java-library'
+    id 'maven-publish'
+}
+
+
+version pdfboxutil_version
+
+dependencies {
+
+    implementation project(':form')
+
+    implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: pdfbox_version
+    // https://mvnrepository.com/artifact/org.apache.pdfbox/preflight
+    implementation group: 'org.apache.pdfbox', name: 'preflight', version: pdfbox_version
+
+    implementation group: 'commons-beanutils', name: 'commons-beanutils', version: bean_utils_version
+
+
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: sfl4j_version
+
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = pdfboxutil_artifact // Specify module-specific artifactId
+        }
+    }
+}
