@@ -3,14 +3,13 @@ gradlew -Dhttp.proxyHost=proxy.ext.ray.com -Dhttp.proxyPort=80 -Dhttps.proxyHost
 */
 
 plugins {
-    id "org.javamodularity.moduleplugin" version "1.8.9"
+    id 'base'
 }
 version = "1.0.0"
 
 subprojects {
 
     apply plugin: 'java-library'
-    apply plugin: 'org.javamodularity.moduleplugin'
 	apply plugin: 'eclipse'
 
     group 'com.thomaswilde'
@@ -20,27 +19,37 @@ subprojects {
         mavenCentral()
     }
 
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    sourceSets {
+        main {
+            java {
+                exclude '**/module-info.java'
+            }
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        exclude '**/module-info.java'
+    }
+
     dependencies {
         // Use JUnit test framework.
         testImplementation group: 'junit', name: 'junit', version: junit_version
-    }
-
-    tasks.register('sourcesJar', Jar) {
-        from sourceSets.main.allJava
-        archiveClassifier.set('sources')
-    }
-
-    tasks.register('javadocJar', Jar) {
-        from javadoc
-        archiveClassifier.set('javadoc')
     }
 
     publishing {
         publications {
             mavenJava(MavenPublication) {
                 from components.java
-                artifact sourcesJar
-                artifact javadocJar
 
                 // Centralized configuration
                 repositories {
@@ -60,22 +69,4 @@ subprojects {
         	downloadSources = true
     	}
 	}
-
-
-
-eclipse.classpath.file {
-    whenMerged {
-    	//entries.each { it.entryAttributes['module'] = 'true' }
-        entries.findAll { isModule(it) }.each { it.entryAttributes['module'] = 'true' }
-    }
-}
-
-
-
-}
-
-boolean isModule(entry) {
-    // filter java 9 modules
-    //true
-    entry.kind == 'lib' || entry.kind == 'src'  // Only libraries can be modules
 }

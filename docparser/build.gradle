@@ -15,8 +15,16 @@ dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: sfl4j_version
 }
 
-sourceCompatibility = "11"
-targetCompatibility = "11"
+sourceSets {
+    main {
+        java {
+            srcDirs = ['drc/main/java']
+        }
+    }
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 publishing {
     publications {

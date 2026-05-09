@@ -9,8 +9,6 @@ version pdfboxutil_version
 
 dependencies {
 
-    implementation project(':form')
-
     implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: pdfbox_version
     // https://mvnrepository.com/artifact/org.apache.pdfbox/preflight
     implementation group: 'org.apache.pdfbox', name: 'preflight', version: pdfbox_version

@@ -14,12 +14,6 @@ pluginManagement {
 }
 
 rootProject.name = 'DocumentHandlers'
-include ':app'
 include ':poiutil'
-include ':pdfitext'
-include ':poiutilfx'
 include ':docparser'
-include ':tika'
 include ':pdfbox'
-include ':ZXing'
-include ':form'
